@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Descoperă România - Obiective Turistice</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #123c69;
+            color: white;
+            text-align: center;
+            padding: 25px 15px;
+        }
+
+        header h1 {
+            font-size: 32px;
+        }
+
+        nav {
+            background-color: #0b2948;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 14px 20px;
+            display: block;
+            transition: background 0.3s;
+        }
+
+        nav a:hover {
+            background-color: #1e6091;
+        }
+
+        /* Imaginea principală - Acasă */
+
+        .hero {
+            height: 500px;
+            background-image:
+                linear-gradient(rgba(0,0,0,0.40), rgba(0,0,0,0.40)),
+                url("https://images.cdn-files-a.com/uploads/9041605/2000_6609434dc7cc3.png");
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-content {
+            padding: 15px;
+        }
+
+        .hero-content h2 {
+            font-size: 42px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 5px black;
+        }
+
+        .hero-content p {
+            font-size: 20px;
+            text-shadow: 2px 2px 5px black;
+        }
+
+        /* Secțiuni */
+
+        section {
+            padding: 45px 8%;
+        }
+
+        section h2 {
+            text-align: center;
+            color: #123c69;
+            font-size: 30px;
+            margin-bottom: 25px;
+        }
+
+        #despre p {
+            margin-bottom: 15px;
+            text-align: justify;
+            font-size: 17px;
+        }
+
+        /* Obiective turistice */
+
+        .obiective {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.12);
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card img {
+            width: 100%;
+            height: 190px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .card-content {
+            padding: 18px;
+        }
+
+        .card h3 {
+            color: #123c69;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            font-size: 15px;
+        }
+
+        /* Galerie foto */
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 22px;
+        }
+
+        .gallery-item {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.12);
+            transition: transform 0.3s;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-4px);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 190px;
+            object-fit: cover;
+            display: block;
+            cursor: pointer;
+        }
+
+        .gallery-item p {
+            padding: 12px 8px;
+            font-weight: bold;
+            color: #123c69;
+            font-size: 17px;
+        }
+
+        /* Lightbox - imagine mărită */
+
+        #lightbox {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            inset: 0;
+            background: rgba(0,0,0,0.93);
+            justify-content: center;
+            align-items: center;
+        }
+
+        #imagineMare {
+            max-width: 85%;
+            max-height: 85%;
+            object-fit: contain;
+            border-radius: 5px;
+        }
+
+        .inchide {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: white;
+            font-size: 45px;
+            cursor: pointer;
+            z-index: 102;
+        }
+
+        .sageata {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 55px;
+            cursor: pointer;
+            padding: 15px;
+            user-select: none;
+            z-index: 102;
+        }
+
+        .sageata:hover,
+        .inchide:hover {
+            color: #8ecae6;
+        }
+
+        .stanga {
+            left: 15px;
+        }
+
+        .dreapta {
+            right: 15px;
+        }
+
+        /* Footer */
+
+        footer {
+            background-color: #123c69;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        /* Adaptare pentru telefon */
+
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 25px;
+            }
+
+            nav a {
+                padding: 10px;
+                font-size: 14px;
+            }
+
+            .hero {
+                height: 350px;
+            }
+
+            .hero-content h2 {
+                font-size: 25px;
+            }
+
+            .hero-content p {
+                font-size: 14px;
+            }
+
+            section {
+                padding: 30px 5%;
+            }
+
+            section h2 {
+                font-size: 25px;
+            }
+
+            #imagineMare {
+                max-width: 90%;
+                max-height: 75%;
+            }
+
+            .sageata {
+                font-size: 35px;
+                padding: 5px;
+            }
+
+            .inchide {
+                right: 15px;
+                top: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Descoperă România</h1>
+        <p>O țară plină de frumusețe, istorie și tradiții</p>
+    </header>
+
+    <nav>
+        <a href="#acasa">Acasă</a>
+        <a href="#despre">Despre România</a>
+        <a href="#obiective">Obiective turistice</a>
+        <a href="#galerie">Galerie</a>
+    </nav>
+
+    <!-- Pagina principală -->
+
+    <div class="hero" id="acasa">
+        <div class="hero-content">
+            <h2>Bine ai venit în România!</h2>
+            <p>Descoperă locurile care fac România specială.</p>
+        </div>
+    </div>
+
+    <!-- Despre România -->
+
+    <section id="despre">
+        <h2>Despre România</h2>
+
+        <p>
+            România este o țară situată în sud-estul Europei, cunoscută
+            pentru frumusețea peisajelor sale, bogăția tradițiilor și
+            istoria impresionantă. Capitala țării este București,
+            cel mai mare oraș și un important centru cultural,
+            economic și administrativ.
+        </p>
+
+        <p>
+            Relieful României este foarte variat, cuprinzând munți,
+            dealuri, podișuri și câmpii. Natura ocupă un loc important
+            în frumusețea țării, oferind peisaje spectaculoase,
+            păduri întinse, râuri și numeroase zone verzi.
+            Clima este temperat-continentală, cu patru anotimpuri
+            bine definite, fiecare aducând un farmec aparte.
+        </p>
+
+        <p>
+            România are o istorie bogată, păstrată prin monumente,
+            clădiri vechi, cetăți și tradiții transmise din generație
+            în generație. De-a lungul timpului, teritoriul țării
+            a fost influențat de diferite civilizații și evenimente
+            istorice, care au contribuit la formarea identității
+            naționale.
+        </p>
+
+            </section>
+
+    <!-- Obiective turistice -->
+
+    <section id="obiective">
+        <h2>Obiective turistice</h2>
+
+        <div class="obiective">
+
+            <div class="card">
+                <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Bran%20Castle%2C%20Transylvania%20%282023%29.jpg"
+                     alt="Castelul Bran">
+                <div class="card-content">
+                    <h3>Castelul Bran</h3>
+                    <p>
+                        Castelul Bran este unul dintre cele mai
+                        cunoscute monumente istorice din România.
+                        Este renumit pentru arhitectura sa medievală
+                        și pentru legendele asociate cu Dracula.
+                    </p>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Pele%C8%99-Castle.jpg"
+                     alt="Castelul Peleș">
+                <div class="card-content">
+                    <h3>Castelul Peleș</h3>
+                    <p>
+                        Situat în Sinaia, Castelul Peleș impresionează
+                        prin arhitectura sa elegantă, decorurile
+                        deosebite și frumusețea peisajului montan.
+                    </p>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Romanian%20Carpathian%20Mountains.jpg"
+                     alt="Munții Carpați">
+                <div class="card-content">
+                    <h3>Munții Carpați</h3>
+                    <p>
+                        Munții Carpați oferă peisaje spectaculoase,
+                        păduri întinse și numeroase posibilități
+                        pentru drumeții și explorarea naturii.
+                    </p>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Lake%20B%C3%A2lea%20and%20the%20Transf%C4%83g%C4%83r%C4%83%C5%9Fan%20road.jpg"
+                     alt="Transfăgărășan">
+                <div class="card-content">
+                    <h3>Transfăgărășan</h3>
+                    <p>
+                        Transfăgărășanul este unul dintre cele mai
+                        spectaculoase drumuri montane din România,
+                        fiind cunoscut pentru serpentinele și
+                        priveliștile sale impresionante.
+                    </p>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Danube%20delta.jpg"
+                     alt="Delta Dunării">
+                <div class="card-content">
+                    <h3>Delta Dunării</h3>
+                    <p>
+                        Delta Dunării este o zonă naturală deosebită,
+                        cunoscută pentru numeroasele specii de păsări,
+                        plante și animale care trăiesc aici.
+                    </p>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Salina%20Turda%20-%20OZN1.jpg"
+                     alt="Salina Turda">
+                <div class="card-content">
+                    <h3>Salina Turda</h3>
+                    <p>
+                        Salina Turda este un obiectiv turistic
+                        spectaculos, apreciat pentru galeriile
+                        subterane și amenajările sale impresionante.
+                    </p>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQViTx6BWkfKbEAlFUQLTfgCznQk7R-kKFc-agZWJOuyucnGMEr5zxNkJA:https://padureacraiului.ro/wp-content/uploads/2021/01/Padurea-Craiului-Stana-de-Vale-Izvorul-Minunilor.jpg&s=10"
+                     alt="Stâna de Vale">
+                <div class="card-content">
+                    <h3>Stâna de Vale</h3>
+                    <p>
+                        Stâna de Vale este o stațiune montană din
+                        județul Bihor, apreciată pentru aerul curat,
+                        pădurile și peisajele sale naturale.
+                        Aici se află și Izvorul Minunilor.
+                    </p>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOoj7gqclSOJEFiV0EQIBwRa6KirHZqSChkYgbFl4BXkoMHEJJlnclLtA:https://upload.wikimedia.org/wikipedia/commons/b/b4/Castelul_Corvinilor_HD.jpg%3Futm_source%3Dro.wikipedia.org%26utm_campaign%3Dindex%26utm_content%3Doriginal&s=10"
+                     alt="Castelul Corvinilor">
+                <div class="card-content">
+                    <h3>Castelul Corvinilor</h3>
+                    <p>
+                        Castelul Corvinilor din Hunedoara este
+                        unul dintre cele mai impresionante castele
+                        medievale din Europa, remarcându-se prin
+                        arhitectura sa gotică.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Galerie foto -->
+
+    <section id="galerie">
+        <h2>Galerie foto</h2>
+
+        <div class="gallery">
+
+            <div class="gallery-item">
+                <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Bran%20Castle%2C%20Transylvania%20%282023%29.jpg"
+                     alt="Castelul Bran"
+                     onclick="deschideImagine(0)">
+                <p>Castelul Bran</p>
+            </div>
+
+            <div class="gallery-item">
+                <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Pele%C8%99-Castle.jpg"
+                     alt="Castelul Peleș"
+                     onclick="deschideImagine(1)">
+                <p>Castelul Peleș</p>
+            </div>
+
+            <div class="gallery-item">
+                <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Romanian%20Carpathian%20Mountains.jpg"
+                     alt="Munții Carpați"
+                     onclick="deschideImagine(2)">
+                <p>Munții Carpați</p>
+            </div>
+
+            <div class="gallery-item">
+                <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Lake%20B%C3%A2lea%20and%20the%20Transf%C4%83g%C4%83r%C4%83%C5%9Fan%20road.jpg"
+                     alt="Transfăgărășan"
+                     onclick="deschideImagine(3)">
+                <p>Transfăgărășan</p>
+            </div>
+
+            <div class="gallery-item">
+                <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Danube%20delta.jpg"
+                     alt="Delta Dunării"
+                     onclick="deschideImagine(4)">
+                <p>Delta Dunării</p>
+            </div>
+
+            <div class="gallery-item">
+                <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Salina%20Turda%20-%20OZN1.jpg"
+                     alt="Salina Turda"
+                     onclick="deschideImagine(5)">
+                <p>Salina Turda</p>
+            </div>
+
+            <div class="gallery-item">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQViTx6BWkfKbEAlFUQLTfgCznQk7R-kKFc-agZWJOuyucnGMEr5zxNkJA:https://padureacraiului.ro/wp-content/uploads/2021/01/Padurea-Craiului-Stana-de-Vale-Izvorul-Minunilor.jpg&s=10"
+                     alt="Stâna de Vale"
+                     onclick="deschideImagine(6)">
+                <p>Stâna de Vale</p>
+            </div>
+
+            <div class="gallery-item">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOoj7gqclSOJEFiV0EQIBwRa6KirHZqSChkYgbFl4BXkoMHEJJlnclLtA:https://upload.wikimedia.org/wikipedia/commons/b/b4/Castelul_Corvinilor_HD.jpg%3Futm_source%3Dro.wikipedia.org%26utm_campaign%3Dindex%26utm_content%3Doriginal&s=10"
+                     alt="Castelul Corvinilor"
+                     onclick="deschideImagine(7)">
+                <p>Castelul Corvinilor</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Imagine mărită și săgeți -->
+
+    <div id="lightbox">
+
+        <span class="inchide" onclick="inchideImagine()">&times;</span>
+
+        <span class="sageata stanga" onclick="schimbaImagine(-1)">
+            &#10094;
+        </span>
+
+        <img id="imagineMare" src="" alt="Imagine mărită">
+
+        <span class="sageata dreapta" onclick="schimbaImagine(1)">
+            &#10095;
+        </span>
+
+    </div>
+
+    <footer>
+        <p>© 2026 Descoperă România | Toate drepturile rezervate</p>
+    </footer>
+
+    <script>
+        let imagini = [];
+        let indexCurent = 0;
+
+        // Preluăm imaginile din galerie
+
+        function pregatesteGaleria() {
+            const poze = document.querySelectorAll(".gallery-item img");
+
+            imagini = Array.from(poze).map(p => p.src);
+        }
+
+        // Deschide imaginea selectată
+
+        function deschideImagine(index) {
+            pregatesteGaleria();
+
+            indexCurent = index;
+
+            document.getElementById("lightbox").style.display = "flex";
+
+            afiseazaImagine();
+        }
+
+        // Afișează imaginea curentă
+
+        function afiseazaImagine() {
+            document.getElementById("imagineMare").src =
+                imagini[indexCurent];
+        }
+
+        // Schimbă imaginea cu ajutorul săgeților
+
+        function schimbaImagine(directie) {
+            indexCurent += directie;
+
+            if (indexCurent >= imagini.length) {
+                indexCurent = 0;
+            }
+
+            if (indexCurent < 0) {
+                indexCurent = imagini.length - 1;
+            }
+
+            afiseazaImagine();
+        }
+
+        // Închide galeria mărită
+
+        function inchideImagine() {
+            document.getElementById("lightbox").style.display = "none";
+        }
+
+        // Navigare cu tastatura
+
+        document.addEventListener("keydown", function(event) {
+
+            const lightbox = document.getElementById("lightbox");
+
+            if (lightbox.style.display === "flex") {
+
+                if (event.key === "ArrowRight") {
+                    schimbaImagine(1);
+                }
+
+                if (event.key === "ArrowLeft") {
+                    schimbaImagine(-1);
+                }
+
+                if (event.key === "Escape") {
+                    inchideImagine();
+                }
+            }
+        });
+
+        // Închide dacă se apasă în afara fotografiei
+
+        document.getElementById("lightbox").addEventListener(
+            "click",
+            function(event) {
+                if (event.target === this) {
+                    inchideImagine();
+                }
+            }
+        );
+    </script>
+
+</body>
+</html>
